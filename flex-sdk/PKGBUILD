@@ -63,6 +63,17 @@ package() {
 
     # removing any left out exe files
     # contributed by bubla, thanks!
-    find $_APP_DIR -name "*.exe" -exec rm '{}' \;
+    msg "Removing any left out exe files.."
+    find $_APP_DIR -name "*.exe" -exec rm '{}' \; || return 1
+
+    # removing any left out bat files
+    # contributed by coverslide, thanks!
+    msg "Removing any left out bat files.."
+    find $_APP_DIR -name "*.bat" -exec rm '{}' \; || return 1
+
+    # removing bin/adl since it's a Mac OS X binary
+    # and to prevent conflict with Air's adl binary
+    msg "Removing bin/adl for future conflicts.."
+    rm $_APP_DIR/bin/adl || return 1
 }
 
