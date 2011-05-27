@@ -1,7 +1,8 @@
-# Contributor: Alper KANAT  <alperkanat@raptiye.org>
+# Maintainer: Alper KANAT <alperkanat@raptiye.org>
+
 pkgname=flex-sdk
-pkgver=4.5.0
-pkgrel=20967
+pkgver=4.5.0.20967
+pkgrel=1
 pkgdesc="Flex is a highly productive, free open source framework for building and maintaining \
          expressive web applications that deploy consistently on all major browsers, desktops, \
          and operating systems."
