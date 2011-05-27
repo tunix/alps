@@ -15,47 +15,51 @@ options=("!strip")
 md5sums=('c92b661eb7b00bb568262851885274dc'
          '496fa1da44083a857cc4bf9123fe4a19')
 
-build() {
-    _APP_DIR=$pkgdir/opt/$pkgname
-    _LICENSE_DIR=$pkgdir/usr/share/licenses/$pkgname
-    _PROFILE_DIR=$pkgdir/etc/profile.d
-    _DOC_DIR=$pkgdir/usr/share/doc/$pkgname
+_APP_DIR=$pkgdir/opt/$pkgname
+_LICENSE_DIR=$pkgdir/usr/share/licenses/$pkgname
+_PROFILE_DIR=$pkgdir/etc/profile.d
+_DOC_DIR=$pkgdir/usr/share/doc/$pkgname
 
+package() {
     cd $srcdir
 
     # copying package files..
-    echo "Copying package files..."
-    mkdir -p $_APP_DIR
-    install -m644 flex-sdk-description.xml $_APP_DIR
-    cp -r ant $_APP_DIR
-    cp -r asdoc $_APP_DIR
-    cp -r bin $_APP_DIR
-    cp -r frameworks $_APP_DIR
-    cp -r lib $_APP_DIR
-    cp -r samples $_APP_DIR
-    cp -r templates $_APP_DIR
-    chmod -R 0755 $_APP_DIR
+    msg "Copying package files.."
+    mkdir -p $_APP_DIR || return 1
+    install -m644 flex-sdk-description.xml $_APP_DIR || return 1
+    cp -r ant $_APP_DIR || return 1
+    cp -r asdoc $_APP_DIR || return 1
+    cp -r bin $_APP_DIR || return 1
+    cp -r frameworks $_APP_DIR || return 1
+    cp -r lib $_APP_DIR || return 1
+    cp -r samples $_APP_DIR || return 1
+    cp -r templates $_APP_DIR || return 1
+    chmod -R 0755 $_APP_DIR || return 1
 
     # copying license information
-    mkdir -p $_LICENSE_DIR
-    install -m644 license-adobesdk.htm $_LICENSE_DIR
-    install -m644 license-adobesdk-fr.htm $_LICENSE_DIR
-    install -m644 license-mpl.htm $_LICENSE_DIR
-    install -m644 "AIR SDK license.pdf" $_LICENSE_DIR
+    msg "Copying license information.."
+    mkdir -p $_LICENSE_DIR || return 1
+    install -m644 license-adobesdk.htm $_LICENSE_DIR || return 1
+    install -m644 license-adobesdk-fr.htm $_LICENSE_DIR || return 1
+    install -m644 license-mpl.htm $_LICENSE_DIR || return 1
+    install -m644 "AIR SDK license.pdf" $_LICENSE_DIR || return 1
 
     # copying documentation
-    mkdir -p $_DOC_DIR
-    install -m644 "AIR SDK Readme.txt" $_DOC_DIR
-    install -m644 readme.htm $_DOC_DIR
+    msg "Copying documentation.."
+    mkdir -p $_DOC_DIR || return 1
+    install -m644 "AIR SDK Readme.txt" $_DOC_DIR || return 1
+    install -m644 readme.htm $_DOC_DIR || return 1
 
     # copying profile script
-    mkdir -p $_PROFILE_DIR
-    install -m755 "$srcdir/flex_sdk.sh" $_PROFILE_DIR
+    msg "Copying profile script.."
+    mkdir -p $_PROFILE_DIR || return 1
+    install -m755 "$srcdir/flex_sdk.sh" $_PROFILE_DIR || return 1
 
     # running dos2unix (available in hd2u package) on certain files
     # dos2unix $_APP_DIR/bin/aasdoc
     # contributed by bubla, thanks!
-    sed -i -e 's/\r$//' $_APP_DIR/bin/aasdoc
+    msg "Running dos2unix.."
+    sed -i -e 's/\r$//' $_APP_DIR/bin/aasdoc || return 1
 
     # removing any left out exe files
     # contributed by bubla, thanks!
