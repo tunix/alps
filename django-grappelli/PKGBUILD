@@ -7,10 +7,9 @@ pkgdesc="A jazzy skin for the Django Admin-Interface"
 url="https://github.com/sehmaschine/django-grappelli"
 arch=('any')
 license=('GPL2')
-makedepends=("git" "python2" "python2-distribute")
-conflicts=()
-provides=()
-source=(https://github.com/sehmaschine/django-grappelli/tarball/2.3.5)
+makedepends=("python2-distribute")
+depends=("python2")
+source=($pkgname-$pkgver.tar.gz::https://github.com/sehmaschine/$pkgname/tarball/$pkgver)
 md5sums=('36291a468ea10d50b33d782413cd436c')
 
 build() {
