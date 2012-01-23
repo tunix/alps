@@ -2,12 +2,13 @@
 
 pkgname=gitosis-git
 pkgver=20120123
-pkgrel=1
+pkgrel=2
 pkgdesc="An application to help make hosting git repos easier and safer."
 url="http://eagain.net/gitweb/?p=gitosis.git"
 arch=('any')
 license=('GPL2')
-makedepends=("git" "python2" "python2-distribute")
+depends=("python2" "python2-distribute")
+makedepends=("git")
 conflicts=("gitosis")
 provides=("gitosis")
 install="gitosis.install"
