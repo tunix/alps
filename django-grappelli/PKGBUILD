@@ -2,7 +2,7 @@
 
 pkgname=django-grappelli
 pkgver=2.3.5
-pkgrel=1
+pkgrel=2
 pkgdesc="A jazzy skin for the Django Admin-Interface"
 url="https://github.com/sehmaschine/django-grappelli"
 arch=('any')
