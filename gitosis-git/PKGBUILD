@@ -7,8 +7,7 @@ pkgdesc="An application to help make hosting git repos easier and safer."
 url="http://eagain.net/gitweb/?p=gitosis.git"
 arch=('any')
 license=('GPL2')
-depends=("python2" "python2-distribute")
-makedepends=("git")
+depends=("python2" "python2-distribute" "git")
 conflicts=("gitosis")
 provides=("gitosis")
 install="gitosis.install"
