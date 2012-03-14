@@ -1,6 +1,6 @@
 # Maintainer: Alper KANAT <alperkanat@raptiye.org>
 
-pkgname=django-tastypie
+pkgname=django-tastypie-git
 pkgver=20120314
 pkgrel=1
 pkgdesc="Creating delicious APIs for Django apps since 2010."
