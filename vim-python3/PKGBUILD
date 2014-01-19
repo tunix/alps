@@ -1,0 +1,82 @@
+# Maintainer: Alper Kanat <alperkanat@raptiye.org>
+# Contributor: 0X1A <albcoron@gmail.com>
+# Contributor: OK100 <ok100@openmailbox.org>
+
+pkgname=vim-python3
+pkgdesc='Vi Improved, a highly configurable, improved version of the vi text editor (Compiled with Python 3).'
+_topver=7.4
+_patchlevel=135
+_versiondir="vim${_topver//./}"
+pkgver=${_topver}.${_patchlevel}
+pkgrel=1
+arch=('i686' 'x86_64')
+license=('custom:vim')
+url="http://www.vim.org"
+depends=("vim-runtime=${pkgver}-${pkgrel}" 'gpm' 'ruby' 'libxt'
+         'desktop-file-utils' 'lua' 'python')
+provides=("vim=${pkgver}-${pkgrel}")
+conflicts=('vim')
+install=vim.install
+source=("ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz"
+        "ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz.sig"
+        'vimrc'
+        'archlinux.vim')
+md5sums=('be672ce2a929503412378c998fc3dc27'
+         'SKIP'
+         'b9d4dcb9d3ee2e151dc4be1e94934f6a'
+         '10353a61aadc3f276692d0e17db1478e')
+
+build() {
+  cp -a "${srcdir}/vim-${pkgver}" vim-build
+  cd "${srcdir}"/vim-build
+
+  ./configure \
+    --prefix=/usr \
+    --localstatedir=/var/lib/vim \
+    --with-features=huge \
+    --with-compiledby='Arch Linux' \
+    --disable-gui \
+    --enable-multibyte \
+    --enable-cscope \
+    --enable-netbeans \
+    --enable-perlinterp \
+    --disable-pythoninterp \
+    --with-python-config-dir=/usr/lib/python3.3/config-3.3m \
+    --enable-python3interp \
+    --enable-rubyinterp \
+    --enable-luainterp
+
+  make
+}
+
+check() {
+  # disable tests because they seem to freeze
+
+  cd "${srcdir}"/vim-build
+
+  # make test
+}
+
+package() {
+  cd "${srcdir}"/vim-build
+  make -j1 VIMRCLOC=/etc DESTDIR="${pkgdir}" install
+
+  # provided by (n)vi in core
+  rm "${pkgdir}"/usr/bin/{ex,view}
+
+  # delete some manpages
+  find "${pkgdir}"/usr/share/man -type d -name 'man1' 2>/dev/null | \
+    while read _mandir; do
+    cd ${_mandir}
+    rm -f ex.1 view.1 # provided by (n)vi
+  done
+
+  # remove run-time
+  rm -r "${pkgdir}"/usr/share/vim
+
+  # license
+  install -Dm644 "${srcdir}"/vim-${pkgver}/runtime/doc/uganda.txt \
+    "${pkgdir}"/usr/share/licenses/${pkgname}/license.txt
+}
+
+# vim:set sw=2 sts=2 et:
